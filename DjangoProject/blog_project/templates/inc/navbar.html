@@ -13,9 +13,10 @@
             <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'post_create' %}" class="nav-link px-2">Add post</a></li>
+            <li><a href="{% url 'post_atchive' %}" class="nav-link px-2">Archive</a></li>
             {% endif %}
-            <li><a href="#" class="nav-link px-2">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2">FAQs</a></li>
+            
+            <li><a href="{% url 'post_search' %}" class="nav-link px-2">Search</a></li>
             <li><a href="#" class="nav-link px-2">About</a></li>
         </ul>
 

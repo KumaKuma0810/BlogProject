@@ -8,9 +8,29 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import TemplateView, DeleteView
 from django.urls import reverse_lazy
 from django.utils.text import slugify
+from django.core.paginator import Paginator
 
 from .form import *
 from .models import *
+
+def ArchivePost(request):
+    post_list = Post.objects.filter(published=False)
+    paginator = Paginator(post_list, 4)
+    page_num = request.GET.get('page')  # Получаем текущую страницу из GET-запроса
+    page_obj = paginator.get_page(page_num)
+
+    return render(request, 'blog/post_archive.html', {'posts': page_obj})
+
+
+def SearchPost(request): 
+    query = request.GET.get('q', '')  # Получаем запрос из строки ?q=...
+    res = []
+
+    if query:
+        res = Post.objects.filter(title__icontains=query)    #__icontains "регистронезависимое содержит" (нечёткий поиск)
+    
+    return render(request, 'blog/search_post.html', {'query': query, 'results': res})    
+    
 
 @login_required
 def PostCreate(request):
@@ -158,6 +178,9 @@ class PostListView(ListView):
     template_name='blog/post_list.html'
     context_object_name = 'posts'
     paginate_by = 4
+
+    def get_queryset(self):
+        return Post.objects.filter(published=True)
 
 class PostDetailView(DetailView):
     model = Post

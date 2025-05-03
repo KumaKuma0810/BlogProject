@@ -6,7 +6,7 @@
     <h1>Создать новый пост</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.as_p|safe}}
         <button type="submit" class="btn btn-primary">Сохранить</button>
     </form>
 </div>

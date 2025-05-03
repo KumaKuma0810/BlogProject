@@ -1,9 +1,14 @@
-from django.urls import path
+from django.urls import path, include
 from .views import *
+
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
+    path('post-archive', ArchivePost, name='post_atchive'),
+    path('search', SearchPost, name='post_search'),
     path('tag/<int:id>', PostsByTag, name='posts_by_tag'),
 
     path('post/delete/<int:pk>', PostDeleteView.as_view(), name='post_delete'),
@@ -21,4 +26,9 @@ urlpatterns = [
 
     path('<slug:slug>/', PostDetailView.as_view(), name='post_detail'),
     path('', PostListView.as_view(), name='post_list'),
+
+    path('ckeditor/', include('ckeditor_uploader.urls'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

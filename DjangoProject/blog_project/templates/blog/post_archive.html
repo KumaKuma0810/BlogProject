@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Архив постов</h1>
+
+    <div class="row">
+      {% for post in posts %}
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm">
+            <img src="{{ post.image.url }}" class="card-img-top" alt="Изображение поста">
+            <div class="card-body">
+              <h5 class="card-title">{{ post.title }}</h5>
+              <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+              <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Читать далее</a>
+            </div>
+            <div class="card-footer text-muted">
+              {{ post.created|date:"d M Y" }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Пагинация (если необходимо) -->
+    <nav aria-label="Страница архива">
+      <ul class="pagination justify-content-center">
+        {% if posts.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1">Первая</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ posts.previous_page_number }}">Предыдущая</a>
+          </li>
+        {% endif %}
+        <li class="page-item disabled">
+          <span class="page-link">Страница {{ posts.number }} из {{ posts.paginator.num_pages }}</span>
+        </li>
+        {% if posts.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ posts.next_page_number }}">Следующая</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ posts.paginator.num_pages }}">Последняя</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+{% endblock %}
