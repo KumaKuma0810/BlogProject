@@ -1,0 +1,15 @@
+<!-- posts_by_tag.html -->
+<h1>Посты с тегом: {{ tag.name }}</h1>
+
+<ul>
+    {% for post in posts %}
+    <li>
+        <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+        <p>{{ post.content|truncatewords:30 }}</p>
+    </li>
+    {% empty %}
+    <li>Нет постов с этим тегом.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'post_list' %}">Назад к списку постов</a>

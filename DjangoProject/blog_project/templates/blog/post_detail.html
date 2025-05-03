@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Контент -->
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+            <!-- Заголовок и мета -->
+            <article>
+                <header class="mb-4">
+
+                    <h1 class="fw-bold">{{ post.title }}</h1>
+
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ post.author.profile.url }}" alt="Аватар" class="rounded-circle me-3" width="70"
+                            height="70">
+                        <p>{{ post.author.user.profile.avatar.url }}</p>
+                        <div>
+                            <h4> <a href="{% url 'author' post.author.id %}">{{ post.author }}</a></h4>
+                            <small class="text-muted">Опубликовано {{ post.created_at }}</small>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Обложка -->
+                <!-- <img src="https://source.unsplash.com/1200x500/?writing,laptop" alt="обложка" class="img-fluid mb-4"> -->
+
+                <!-- Основной текст -->
+                <section class="post-content">
+                    {{ post.body }}
+                </section>
+                <hr>
+                <p>Теги:
+                    {% for tag in post.tags.all %}
+                    <a href="/">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <!-- Кнопка "назад" -->
+                <div class="mt-5">
+                    <a href="/" class="btn btn-outline-secondary">&larr; Назад к блогу</a>
+                    {% if post.author == request.user or request.is_superuser %}
+                    <a href="{% url 'post_delete' post.pk %}" class="btn btn-outline-secondary"> Удалить пост</a>
+                    <a href="{% url 'post_edit' post.pk %}" class="btn btn-outline-secondary">Редактировать
+                        пост</a>
+                    {% endif %}
+
+
+                </div>
+            </article>
+
+            <section class="mt-5">
+                <!-- Форма -->
+                {% if user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Оставить комментарий</button>
+                </form>
+                {% else %}
+                <p>Чтобы оставить комментарий, <a href="{% url 'login' %}">войдите</a>.</p>
+                {% endif %}
+                <!-- последние записи -->
+
+                <!-- Комментарии -->
+                <div class="container-comment">
+                    <h3>Комментарии</h3>
+                    {% for comment in comments %}
+                    <div class="mb-4 container-comment-div">
+                        <div class="border p-3 rounded mb-2">
+                            <strong>{{ comment.username.user }}</strong>
+                            <p>{{ comment.body }}</p>
+                            <span class="text-muted">{{ comment.created_at|date:"d M Y H:i" }}</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>Комментариев пока нет...</p>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

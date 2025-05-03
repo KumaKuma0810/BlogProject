@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Контент -->
+<div class="container">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <!-- Заголовок страницы -->
+                <header class="mb-4">
+                    <h1 class="fw-bold">Последние посты...</h1>
+                </header>
+
+                <!-- Превью постов -->
+                {% for post in posts %}
+                <div class="post-preview post-custom-list">
+                    <h3>{{post}}</h3>
+                    <p class="text-muted">{{post.created_at|date:"d M Y"}}</p>
+                    <p>{{ post.body|truncatechars:200 }}</p>
+                    <a href="{{post.get_absolute_url}}" class="read-more-btn">Читать далее &rarr;</a>
+                </div>
+                {% empty %}
+                <h3>Нет постов..</h3>
+                {% endfor %}
+
+                <div class="container">
+                    {% if is_paginated %}
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                                    aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock %}
