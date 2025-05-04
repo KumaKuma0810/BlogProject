@@ -14,11 +14,10 @@
     <div class="search-results">
         <h5 class="mb-3">Результаты:</h5>
         {% if results %}
-        <!-- Заглушки результатов -->
         <div class="list-group">
             {% for post in results %}
             <a href="{{ post.get_absolute_url }}" class="list-group-item list-group-item-action">
-                    <h6 class="mb-1">{{ post.title }}</h6>
+                    <h3 class="mb-1">{{ post.title }}</h3>
                     <p class="mb-1 text-muted">{{ post.body | truncatewords:10 }}</p>
                     <small>{{ post.created_at }}</small>
             </a>

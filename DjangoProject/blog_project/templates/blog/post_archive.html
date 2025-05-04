@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% block content %}
 <div class="container py-5">
@@ -6,15 +7,14 @@
     <div class="row">
       {% for post in posts %}
         <div class="col-md-4 mb-4">
-          <div class="card shadow-sm">
-            <img src="{{ post.image.url }}" class="card-img-top" alt="Изображение поста">
+          <div class="card shadow-sm custom-card-sm">
             <div class="card-body">
-              <h5 class="card-title">{{ post.title }}</h5>
-              <p class="card-text">{{ post.content|truncatewords:30 }}</p>
-              <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Читать далее</a>
+              <h5 class="card-title card-title-custom">{{ post.title }}</h5>
+              <p class="card-text">{{ post.body|truncatewords:10|safe }}</p>
+              <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-custom-primary">Читать далее</a>
             </div>
             <div class="card-footer text-muted">
-              {{ post.created|date:"d M Y" }}
+              {{ post.created_at|date:"d M Y" }}
             </div>
           </div>
         </div>

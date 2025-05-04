@@ -13,6 +13,9 @@ from django.core.paginator import Paginator
 from .form import *
 from .models import *
 
+def About(request):
+    return render(request, 'blog/about.html')
+
 def ArchivePost(request):
     post_list = Post.objects.filter(published=False)
     paginator = Paginator(post_list, 4)
