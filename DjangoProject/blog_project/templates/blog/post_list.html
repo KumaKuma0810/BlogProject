@@ -15,7 +15,7 @@
                 <!-- Превью постов -->
                 {% for post in posts %}
                 <div class="post-preview post-custom-list">
-                    <h3>{{post}}</h3>
+                    <h3>{{ post|safe }}</h3>
                     <p class="text-muted">{{post.created_at|date:"d M Y"}}</p>
                     <p>{{ post.body|truncatechars:200|safe }}</p>
                     <a href="{{post.get_absolute_url}}" class="read-more-btn">Читать далее &rarr;</a>

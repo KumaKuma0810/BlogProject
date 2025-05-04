@@ -28,6 +28,7 @@ urlpatterns = [
     path('', PostListView.as_view(), name='post_list'),
 
     path('ckeditor/', include('ckeditor_uploader.urls'))
+
 ]
 
 if settings.DEBUG:

@@ -1,19 +1,13 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from .models import *
 
 class PostCreateForm(forms.ModelForm):
     title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    body = forms.CharField(widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'rows': 5,
-            'cols': 50
-    }))
-    tags = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Введите теги через запятую'
-    }))
+    body = forms.CharField(widget=CKEditorUploadingWidget(attrs={'class': 'form-control','rows': 10, 'cols': 111} ,config_name='default'))
+    tags = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите теги через запятую'}))
 
     class Meta:
         model = Post
