@@ -7,11 +7,15 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    # path('test-404', page_404),
+
+    path('edit-profile', UpdateProfile, name='edit_profile'),
+
     path('about', About, name='about_page'),
 
     path('post-archive', ArchivePost, name='post_atchive'),
     path('search', SearchPost, name='post_search'),
-    path('tag/<int:id>', PostsByTag, name='posts_by_tag'),
+    path('tag/<int:tag_id>', PostsByTag, name='posts_by_tag'),
 
     path('post/delete/<int:pk>', PostDeleteView.as_view(), name='post_delete'),
     path('post/edit/<int:pk>', UpdatePost, name='post_edit'),
@@ -32,6 +36,7 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls'))
 
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

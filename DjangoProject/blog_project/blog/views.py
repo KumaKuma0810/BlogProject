@@ -13,8 +13,32 @@ from django.core.paginator import Paginator
 from .form import *
 from .models import *
 
+
+@login_required
+def UpdateProfile(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('profile')  # или куда нужно
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+
+    return render(request, 'blog/update_profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    })
+
+# def page_404(request):
+#     return render(request, 'blog/404.html')
+
 def About(request):
     return render(request, 'blog/about.html')
+
 
 def ArchivePost(request):
     post_list = Post.objects.filter(published=False)
@@ -25,15 +49,15 @@ def ArchivePost(request):
     return render(request, 'blog/post_archive.html', {'posts': page_obj})
 
 
-def SearchPost(request): 
+def SearchPost(request):
     query = request.GET.get('q', '')  # Получаем запрос из строки ?q=...
     res = []
 
     if query:
         res = Post.objects.filter(title__icontains=query)    #__icontains "регистронезависимое содержит" (нечёткий поиск)
-    
-    return render(request, 'blog/search_post.html', {'query': query, 'results': res})    
-    
+
+    return render(request, 'blog/search_post.html', {'query': query, 'results': res})
+
 
 @login_required
 def PostCreate(request):
@@ -117,9 +141,9 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         return self.request.user
 
 
-
 class UserProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'blog/profile.html'
+    context_object_name = 'profile'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -176,6 +200,7 @@ def signup_view(request):
 
     return render(request, 'blog/registration/signup.html', {'form': form})
 
+
 class PostListView(ListView):
     model = Post
     template_name='blog/post_list.html'
@@ -184,6 +209,7 @@ class PostListView(ListView):
 
     def get_queryset(self):
         return Post.objects.filter(published=True)
+
 
 class PostDetailView(DetailView):
     model = Post
@@ -222,6 +248,7 @@ class PostDetailView(DetailView):
         context['form'] = form
 
         return self.render_to_response(context)
+
 
 class AuthorDetailView(DetailView):
     model = User

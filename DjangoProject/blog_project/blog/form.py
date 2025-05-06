@@ -4,6 +4,27 @@ from django.contrib.auth.forms import UserCreationForm
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from .models import *
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio', 'avatar']
+        widgets = {
+            'bio': forms.Textarea(attrs={'class': 'form-control'}),
+            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control'})
+        }
+        labels = {
+            'avatar': '',
+        }
+
 class PostCreateForm(forms.ModelForm):
     title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     body = forms.CharField(widget=CKEditorUploadingWidget(attrs={'class': 'form-control','rows': 10, 'cols': 111} ,config_name='default'))
@@ -31,9 +52,6 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'body', 'tags']
-
-
-
 
     def save(self, commit=True):
         instance = super().save(commit=False)

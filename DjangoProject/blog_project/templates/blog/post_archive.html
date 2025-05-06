@@ -1,49 +1,48 @@
-
 {% extends 'base.html' %}
 {% block content %}
 <div class="container py-5">
     <h1 class="mb-4">Архив постов</h1>
 
     <div class="row">
-      {% for post in posts %}
+        {% for post in posts %}
         <div class="col-md-4 mb-4">
-          <div class="card shadow-sm custom-card-sm">
-            <div class="card-body">
-              <h5 class="card-title card-title-custom">{{ post.title }}</h5>
-              <p class="card-text">{{ post.body|truncatewords:10|safe }}</p>
-              <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-custom-primary">Читать далее</a>
+            <div class="card shadow-sm custom-card-sm">
+                <div class="card-body">
+                    <h5 class="card-title card-title-custom">{{ post.title|truncatewords:4 }}</h5>
+                    <p class="card-text">{{ post.body|truncatewords:10|safe }}</p>
+                    <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-custom-primary">Читать далее</a>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ post.created_at|date:"d M Y" }}
+                </div>
             </div>
-            <div class="card-footer text-muted">
-              {{ post.created_at|date:"d M Y" }}
-            </div>
-          </div>
         </div>
-      {% endfor %}
+        {% endfor %}
     </div>
 
     <!-- Пагинация (если необходимо) -->
     <nav aria-label="Страница архива">
-      <ul class="pagination justify-content-center">
-        {% if posts.has_previous %}
-          <li class="page-item">
-            <a class="page-link" href="?page=1">Первая</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="?page={{ posts.previous_page_number }}">Предыдущая</a>
-          </li>
-        {% endif %}
-        <li class="page-item disabled">
-          <span class="page-link">Страница {{ posts.number }} из {{ posts.paginator.num_pages }}</span>
-        </li>
-        {% if posts.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ posts.next_page_number }}">Следующая</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="?page={{ posts.paginator.num_pages }}">Последняя</a>
-          </li>
-        {% endif %}
-      </ul>
+        <ul class="pagination justify-content-center">
+            {% if posts.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">Первая</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ posts.previous_page_number }}">Предыдущая</a>
+            </li>
+            {% endif %}
+            <li class="page-item disabled">
+                <span class="page-link">Страница {{ posts.number }} из {{ posts.paginator.num_pages }}</span>
+            </li>
+            {% if posts.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ posts.next_page_number }}">Следующая</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ posts.paginator.num_pages }}">Последняя</a>
+            </li>
+            {% endif %}
+        </ul>
     </nav>
-  </div>
+</div>
 {% endblock %}

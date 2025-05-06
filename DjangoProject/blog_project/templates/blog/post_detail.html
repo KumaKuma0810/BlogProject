@@ -33,7 +33,7 @@
                 <hr>
                 <p>Теги:
                     {% for tag in post.tags.all %}
-                    <a href="/">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                    <a href="{% url 'posts_by_tag' tag.id %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </p>
                 <!-- Кнопка "назад" -->
@@ -82,3 +82,45 @@
     </div>
 </div>
 {% endblock %}
+
+
+
+
+<!--
+
+<div class="container mt-5">
+    <h3>Комментарии</h3>
+
+
+    <div class="d-flex mb-3">
+
+        <img src="https://via.placeholder.com/50" alt="Аватар" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+
+
+        <div>
+            <div class="fw-bold">Имя пользователя</div>
+            <div class="text-muted mb-2">1 час назад</div>
+            <p class="mb-0">Это пример комментария. Очень полезный комментарий о чём-то важном.</p>
+        </div>
+    </div>
+
+
+
+    <div class="d-flex mb-3">
+        <img src="https://via.placeholder.com/50" alt="Аватар" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+        <div>
+            <div class="fw-bold">Другой пользователь</div>
+            <div class="text-muted mb-2">2 часа назад</div>
+            <p class="mb-0">Вот второй комментарий. Здесь можно оставить свои мысли или вопросы.</p>
+        </div>
+    </div>
+
+
+    <form method="POST" action="{% url 'add_comment' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <textarea class="form-control" id="commentText" name="comment" rows="3" placeholder="Напишите ваш комментарий..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить комментарий</button>
+    </form>
+</div> -->
