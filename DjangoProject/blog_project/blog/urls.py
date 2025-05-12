@@ -8,11 +8,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # path('test-404', page_404),
-
+    path('comment/edit/<int:pk>', edit_comment, name='edit_comment'),
     path('edit-profile', UpdateProfile, name='edit_profile'),
-
     path('about', About, name='about_page'),
-
     path('post-archive', ArchivePost, name='post_atchive'),
     path('search', SearchPost, name='post_search'),
     path('tag/<int:tag_id>', PostsByTag, name='posts_by_tag'),

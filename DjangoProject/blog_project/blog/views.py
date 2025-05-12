@@ -15,6 +15,28 @@ from .models import *
 
 
 @login_required
+def edit_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+
+    if comment.user != request.user:
+        return redirect('post_detail', comment.post.slug)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('post_detail', comment.post.slug)
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(request, 'blog/edit_comment.html', {'form': form, 'comment': comment})
+
+
+
+
+@login_required
 def UpdateProfile(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
@@ -120,7 +142,7 @@ def UpdatePost(request, pk):
 
 def PostsByTag(request, tag_id):
     tag = get_object_or_404(Tag, id=tag_id)
-    posts = Post.objects.filter(tags=tag)
+    posts = Post.objects.filter(tags=tag, published=True)
 
     return render(request, 'blog/posts_by_tag.html', {'tag': tag, 'posts': posts})
 

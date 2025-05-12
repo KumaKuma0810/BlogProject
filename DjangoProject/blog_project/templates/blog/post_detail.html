@@ -39,7 +39,7 @@
                 <!-- Кнопка "назад" -->
                 <div class="mt-5">
                     <a href="/" class="btn btn-outline-secondary">&larr; Назад к блогу</a>
-                    {% if post.author == request.user or request.is_superuser %}
+                    {% if post.author == request.user or request.user.is_superuser %}
                     <a href="{% url 'post_delete' post.pk %}" class="btn btn-outline-secondary"> Удалить пост</a>
                     <a href="{% url 'post_edit' post.pk %}" class="btn btn-outline-secondary">Редактировать
                         пост</a>
@@ -52,11 +52,20 @@
             <section class="mt-5">
                 <!-- Форма -->
                 {% if user.is_authenticated %}
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Оставить комментарий</button>
-                </form>
+                <div class="d-flex mb-3">
+                    <img src="{{ request.user.profile.avatar.url }}" alt="Аватар" class="rounded-circle me-3"
+                        style="width: 100px; height: 100px;">
+
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Оставить комментарий</button>
+                    </form>
+
+                </div>
+
+
+
                 {% else %}
                 <p>Чтобы оставить комментарий, <a href="{% url 'login' %}">войдите</a>.</p>
                 {% endif %}
@@ -66,13 +75,20 @@
                 <div class="container-comment">
                     <h3>Комментарии</h3>
                     {% for comment in comments %}
-                    <div class="mb-4 container-comment-div">
-                        <div class="border p-3 rounded mb-2">
-                            <strong>{{ comment.username.user }}</strong>
+                    <hr>
+                    <div class="d-flex mb-3">
+
+                        <img src="{{ comment.user.profile.avatar.url }}" alt="Аватар" class="rounded-circle me-3"
+                            style="width: 100px; height: 100px;">
+                        <div>
+                            <strong>{{ comment.user.username }}</strong>
                             <p>{{ comment.body }}</p>
                             <span class="text-muted">{{ comment.created_at|date:"d M Y H:i" }}</span>
+                            <a href="{% url 'edit_comment' comment.pk %}"
+                                class="btn btn-sm btn-outline-primary">Редактировать</a>
                         </div>
                     </div>
+
                     {% empty %}
                     <p>Комментариев пока нет...</p>
                     {% endfor %}

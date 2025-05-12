@@ -22,10 +22,14 @@ a {
     text-decoration: none;
 }
 
+/*
 .card-body {
-    height: 150px;
-}
+    height: 250px;
+} */
 
+.card .shadow-sm .custom-card-sm {
+    height: 300px;
+}
 
 /* 404 */
 .error-container {

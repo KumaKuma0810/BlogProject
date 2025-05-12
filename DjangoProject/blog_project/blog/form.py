@@ -27,7 +27,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
 class PostCreateForm(forms.ModelForm):
     title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    body = forms.CharField(widget=CKEditorUploadingWidget(attrs={'class': 'form-control','rows': 10, 'cols': 111} ,config_name='default'))
+    body = forms.CharField(widget=CKEditorUploadingWidget(attrs={'class': 'form-control','rows': 10, 'coll': 111} ,config_name='default'))
     tags = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите теги через запятую'}))
 
     class Meta:
@@ -77,7 +77,8 @@ class CommentForm(forms.ModelForm):
             'body': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Оставьте комментарий...',
-                'rows': 3
+                'rows': 3,
+                'cols': 150,
             })
         }
 
