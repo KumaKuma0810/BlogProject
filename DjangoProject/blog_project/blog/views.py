@@ -106,11 +106,11 @@ def PostCreate(request):
 
 
 @login_required
-def UpdatePost(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def UpdatePost(request, slug):
+    post = get_object_or_404(Post, slug=slug)
 
     if post.author != request.user:
-        return redirect('post_detail', pk)
+        return redirect('post_detail', slug)
 
     if request.method == 'POST':
         form = PostCreateForm(request.POST)
@@ -128,7 +128,7 @@ def UpdatePost(request, pk):
                 tag, created = Tag.objects.get_or_create(name=tag_name, slug=tag_slug)
                 post.tags.add(tag)
 
-            return redirect('/')
+            return redirect('post_detail', slug=slug)
     else:
         initial_tags = ', '.join(tag.name for tag in post.tags.all())
         form = PostCreateForm(initial = {

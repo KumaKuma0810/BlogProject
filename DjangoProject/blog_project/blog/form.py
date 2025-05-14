@@ -1,7 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from tinymce.widgets import TinyMCE
+
 from .models import *
 
 class UserUpdateForm(forms.ModelForm):
@@ -26,9 +29,9 @@ class ProfileUpdateForm(forms.ModelForm):
         }
 
 class PostCreateForm(forms.ModelForm):
-    title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    body = forms.CharField(widget=CKEditorUploadingWidget(attrs={'class': 'form-control','rows': 10, 'coll': 111} ,config_name='default'))
-    tags = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите теги через запятую'}))
+    title = forms.CharField(label='Заголовок', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    body = forms.CharField(label='Описание', widget=TinyMCE(attrs={'class':'form-control','cols': 110, 'rows': 10}))
+    tags = forms.CharField(label='Тег', required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите теги через запятую'}))
 
     class Meta:
         model = Post

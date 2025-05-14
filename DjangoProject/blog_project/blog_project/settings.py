@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'ckeditor_uploader',
+    'tinymce',
     'blog',
 ]
 
@@ -190,4 +191,15 @@ CKEDITOR_CONFIGS = {
         'filebrowserUploadUrl': '/ckeditor/upload/',
         'filebrowserBrowseUrl': '/ckeditor/browse/',
     }
+}
+
+
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 360,
+    'width': '100%',
+    'menubar': False,
+    'plugins': 'link image preview codesample',
+    'toolbar': 'undo redo | bold italic | alignleft aligncenter alignright | code',
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 20,
 }

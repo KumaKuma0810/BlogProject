@@ -2,7 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.models import User
-from ckeditor_uploader.fields import RichTextUploadingField
+# from ckeditor_uploader.fields import RichTextUploadingField
+from tinymce.models import HTMLField
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -38,7 +39,7 @@ class Comment(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, blank=True)
-    body = RichTextUploadingField()
+    body = HTMLField(blank=True)
     created_at = models.DateTimeField(auto_now=True)
     published = models.BooleanField(default=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)

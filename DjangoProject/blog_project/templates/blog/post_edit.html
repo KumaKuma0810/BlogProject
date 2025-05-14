@@ -4,9 +4,21 @@
 {% block content %}
 <div class="container">
     <h1>Редактировать пост</h1>
+    {{ form.media }}
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="mb-3">
+            {{form.title.label_tag}}
+            {{form.title}}
+        </div>
+        <div class="mb-3">
+            {{ form.body.label_tag }}
+            {{ form.body }}
+        </div>
+        <div class="mb-3">
+            {{form.tags.label_tag}}
+            {{form.tags}}
+        </div>
         <button type="submit" class="btn btn-primary">Сохранить</button>
     </form>
 </div>

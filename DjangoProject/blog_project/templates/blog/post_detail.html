@@ -15,7 +15,6 @@
                     <div class="d-flex align-items-center mb-3">
                         <img src="{{ post.author.profile.avatar.url }}" alt="Аватар" class="rounded-circle me-3"
                             width="70" height="70">
-
                         <div>
                             <h4> <a href="{% url 'author' post.author.id %}">{{ post.author }}</a></h4>
                             <small class="text-muted">Опубликовано {{ post.created_at }}</small>
@@ -40,8 +39,8 @@
                 <div class="mt-5">
                     <a href="/" class="btn btn-outline-secondary">&larr; Назад к блогу</a>
                     {% if post.author == request.user or request.user.is_superuser %}
-                    <a href="{% url 'post_delete' post.pk %}" class="btn btn-outline-secondary"> Удалить пост</a>
-                    <a href="{% url 'post_edit' post.pk %}" class="btn btn-outline-secondary">Редактировать
+                    <a href="{% url 'post_delete' post.slug %}" class="btn btn-outline-secondary"> Удалить пост</a>
+                    <a href="{% url 'post_edit' post.slug %}" class="btn btn-outline-secondary">Редактировать
                         пост</a>
                     {% endif %}
 
