@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 # from ckeditor_uploader.fields import RichTextUploadingField
 from tinymce.models import HTMLField
 
+class AboutModel(models.Model):
+    text = HTMLField(blank=True)
+
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(unique=True, null=False)

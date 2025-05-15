@@ -13,7 +13,6 @@ from django.core.paginator import Paginator
 from .form import *
 from .models import *
 
-
 @login_required
 def edit_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
@@ -59,7 +58,8 @@ def UpdateProfile(request):
 #     return render(request, 'blog/404.html')
 
 def About(request):
-    return render(request, 'blog/about.html')
+    about_page = AboutModel.objects.all()
+    return render(request, 'blog/about.html', {'about_page': about_page})
 
 
 def ArchivePost(request):

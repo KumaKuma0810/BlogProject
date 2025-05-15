@@ -1,6 +1,10 @@
 from django.contrib import admin
 from .models import *
 
+@admin.register(AboutModel)
+class AboutAdmin(admin.ModelAdmin):
+    list_display = ('text',)
+
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
