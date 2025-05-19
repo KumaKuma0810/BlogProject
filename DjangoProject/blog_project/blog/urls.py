@@ -5,8 +5,18 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
+#API
+from rest_framework.routers import DefaultRouter
+from .views import PostSerializer
+
+router = DefaultRouter()
+router.register(r'post', PostViewSet)
 
 urlpatterns = [
+    #API
+    path('api/', include(router.urls)),
+
+
     # path('test-404', page_404),
     path('comment/edit/<int:pk>', edit_comment, name='edit_comment'),
     path('edit-profile', UpdateProfile, name='edit_profile'),
