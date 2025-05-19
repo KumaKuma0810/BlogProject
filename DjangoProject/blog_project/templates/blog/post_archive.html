@@ -2,12 +2,14 @@
 {% block content %}
 <div class="container py-5">
     <h1 class="mb-4">Архив постов</h1>
-
+    {% if posts %}
     <div class="row">
         {% for post in posts %}
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm custom-card-sm">
                 <div class="card-body">
+                    <img src="{{ post.img.url }}" alt="Картинка" width="100%">
+                    <hr>
                     <h5 class="card-title card-title-custom">{{ post.title|truncatewords:4 }}</h5>
                     <p class="card-text">{{ post.body|truncatewords:10|safe }}</p>
                     <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-custom-primary">Читать далее</a>
@@ -19,6 +21,9 @@
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <h3>Постов нет...</h3>
+    {% endif %}
 
     <!-- Пагинация (если необходимо) -->
     <nav aria-label="Страница архива">

@@ -32,10 +32,12 @@ class PostCreateForm(forms.ModelForm):
     title = forms.CharField(label='Заголовок', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     body = forms.CharField(label='Описание', widget=TinyMCE(attrs={'class':'form-control','cols': 110, 'rows': 10}))
     tags = forms.CharField(label='Тег', required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите теги через запятую'}))
+    img = forms.FileField(label='Изображение', widget=forms.FileInput(attrs={'class': 'form-control'}))
+
 
     class Meta:
         model = Post
-        fields = ['title', 'body', 'tags']
+        fields = ['title', 'body', 'tags', 'img']
 
     def clean_tags(self):
         tags_str = self.cleaned_data.get('tags', '')

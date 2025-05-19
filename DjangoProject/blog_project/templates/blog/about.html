@@ -9,7 +9,9 @@
                 <div class="card-body">
                     <h1 class="card-title mb-4">О сайте</h1>
                     <p class="card-text">
-                        {{ about_page.text }}
+                        {% for text in about_page %}
+                        {{ text.text|safe }}
+                        {% endfor %}
                     </p>
                     <hr>
                 </div>

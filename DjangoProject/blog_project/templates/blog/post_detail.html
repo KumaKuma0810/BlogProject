@@ -9,9 +9,6 @@
             <!-- Заголовок и мета -->
             <article>
                 <header class="mb-4">
-
-                    <h1 class="fw-bold">{{ post.title }}</h1>
-
                     <div class="d-flex align-items-center mb-3">
                         <img src="{{ post.author.profile.avatar.url }}" alt="Аватар" class="rounded-circle me-3"
                             width="70" height="70">
@@ -21,12 +18,11 @@
                         </div>
                     </div>
                 </header>
-
-                <!-- Обложка -->
-                <!-- <img src="https://source.unsplash.com/1200x500/?writing,laptop" alt="обложка" class="img-fluid mb-4"> -->
-
-                <!-- Основной текст -->
+                <p class="text-center">
+                    <img src="{{ post.img.url }}" alt="обложка" class="img-fluid mb-4" height="50%">
+                </p>
                 <section class="post-content">
+                    <h1 class="fw-bold">{{ post.title }}</h1>
                     {{ post.body|safe }}
                 </section>
                 <hr>
@@ -35,7 +31,7 @@
                     <a href="{% url 'posts_by_tag' tag.id %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </p>
-                <!-- Кнопка "назад" -->
+
                 <div class="mt-5">
                     <a href="/" class="btn btn-outline-secondary">&larr; Назад к блогу</a>
                     {% if post.author == request.user or request.user.is_superuser %}
@@ -43,11 +39,8 @@
                     <a href="{% url 'post_edit' post.slug %}" class="btn btn-outline-secondary">Редактировать
                         пост</a>
                     {% endif %}
-
-
                 </div>
             </article>
-
             <section class="mt-5">
                 <!-- Форма -->
                 {% if user.is_authenticated %}
