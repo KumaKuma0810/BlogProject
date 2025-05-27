@@ -5,9 +5,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('blog.urls'))
+    path('', include('blog.urls')),
+    path('api/v1/', include('blog.api.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]
 # Это нужно ТОЛЬКО в режиме разработки
 if settings.DEBUG:
-    path('tinymce/', include('tinymce.urls')),
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -13,39 +13,6 @@ from django.core.paginator import Paginator
 from .form import *
 from .models import *
 
-from rest_framework import viewsets
-from .serializers import PostSerializer
-
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.permissions import IsAuthenticated #JWT
-from rest_framework.pagination import PageNumberPagination
-from rest_framework_simplejwt.authentication import JWTAuthentication
-
-# API
-class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all() # Используем созданный сериализатор
-    search_filters = ['title', 'author']
-    serializer_class = PostSerializer
-    filter_backends = [DjangoFilterBackend] # точная фильтрация по полям.
-    filterset_fields = ['author', 'published']  # Поля для точной фильтрации
-    permission_classes = [IsAuthenticated]  # Определяет, кто может обращаться к API.
-    # permission_classes = [IsAdminUser]  # Только для админов
-    ordering_fields = ['title']
-    pagination_class = PageNumberPagination
-    authentication_classes = [JWTAuthentication]    # Определяет, как клиент авторизуется.
-
-    # queryset - Всегда. Определяет "сырые" данные.
-    # serializer_class	- Всегда. Задаёт правила преобразования данных.
-    # filter_backends	- Нужна фильтрация/поиск/сортировка.
-    # filterset_fields	- Точная фильтрация по конкретным полям.
-    # search_fields	- Поиск по частичному совпадению.
-    # ordering_fields	- Сортировка результатов.
-    # pagination_class	- Большие datasets (>100 записей).
-    # permission_classes	- Ограничение доступа.
-    # authentication_classes	- Защита API от неавторизованных запросов.
-
-#--------------------------------------------------
-
 
 @login_required
 def edit_comment(request, pk):
@@ -187,7 +154,7 @@ def PostsByTag(request, tag_id):
     return render(request, 'blog/posts_by_tag.html', {'tag': tag, 'posts': posts})
 
 
-#UserPassesTestMixin - позволяет задать дополнительную проверку через test_func()
+
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'blog/post_confirm_delete.html'
