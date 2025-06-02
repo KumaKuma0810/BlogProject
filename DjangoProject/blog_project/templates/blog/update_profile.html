@@ -13,10 +13,17 @@
                         <img src="{{ request.user.profile.avatar.url }}" alt="Avatar" width="40%"
                             alt="Current post image" class="img-fluid rounded">
                     </div>
-                    {{ profile_form.avatar}}
+                    <div class="mb-3">
+                        <!-- <label for="id_avatar" class="form-label">Загрузить новый аватар</label> -->
+                        {{ profile_form.avatar }}
+
+                        {% if profile_form.avatar.erorrs %}
+                        <div class="text-danger small mt-1">{{ profile_form.avatar.errors }}</div>
+                        {% endif %}
+                    </div>
                 </div>
 
-                {% if profile_form.username.errors %}
+                {% if profile_form.avatar.errors %}
                 <div class=" text-danger small">{{ profile_form.username.errors }}
                 </div>
                 {% endif %}

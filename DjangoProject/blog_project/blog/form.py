@@ -14,6 +14,7 @@ class UserUpdateForm(forms.ModelForm):
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+
         }
 
 class ProfileUpdateForm(forms.ModelForm):
@@ -22,7 +23,7 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['bio', 'avatar']
         widgets = {
             'bio': forms.Textarea(attrs={'class': 'form-control'}),
-            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control'})
+            'avatar': forms.FileInput(attrs={'class': 'form-control'})
         }
         labels = {
             'avatar': '',
