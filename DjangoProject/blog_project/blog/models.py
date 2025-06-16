@@ -40,7 +40,7 @@ class Comment(models.Model):
 
 
 class Post(models.Model):
-    img = models.ImageField(upload_to='blog_img/', default='blog_img/default_blog.jpg',  blank=True, null=True)
+    img = models.ImageField(upload_to='blog_img/', default='blog_img/default_blog.jpg',  blank=False, null=False)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     body = HTMLField(blank=True)

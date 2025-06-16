@@ -44,19 +44,15 @@
             <section class="mt-5">
                 <!-- Форма -->
                 {% if user.is_authenticated %}
-                <div class="d-flex mb-3">
-                    <img src="{{ request.user.profile.avatar.url }}" alt="Аватар" class="rounded-circle me-3"
-                        style="width: 100px; height: 100px;">
-
+                <div class="d-flex mb-4">
+                    <img src="{{ request.user.profile.avatar.url }}" alt="Аватарка" class="rounded-circle me-3"
+                        width="200" height="100">
                     <form method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-primary">Оставить комментарий</button>
                     </form>
-
                 </div>
-
-
 
                 {% else %}
                 <p>Чтобы оставить комментарий, <a href="{% url 'login' %}">войдите</a>.</p>
@@ -69,9 +65,8 @@
                     {% for comment in comments %}
                     <hr>
                     <div class="d-flex mb-3">
-
-                        <img src="{{ comment.user.profile.avatar.url }}" alt="Аватар" class="rounded-circle me-3"
-                            style="width: 100px; height: 100px;">
+                        <img src="{{ comment.user.profile.avatar.url }}" alt="Аватарка" class="rounded-circle me-3"
+                            width="100" height="100">
                         <div>
                             <strong>{{ comment.user.username }}</strong>
                             <p>{{ comment.body }}</p>

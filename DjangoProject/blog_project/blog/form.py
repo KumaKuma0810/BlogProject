@@ -35,7 +35,6 @@ class PostCreateForm(forms.ModelForm):
     tags = forms.CharField(label='Тег', required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите теги через запятую'}))
     img = forms.FileField(label='Изображение', widget=forms.FileInput(attrs={'class': 'form-control'}))
 
-
     class Meta:
         model = Post
         fields = ['title', 'body', 'tags', 'img']
@@ -45,6 +44,35 @@ class PostCreateForm(forms.ModelForm):
         # Разбиваем по запятым и убираем пробелы
         tags_list = [tag.strip() for tag in tags_str.split(',') if tag.strip()]
         return tags_list
+
+    def clean_tags(self):
+        tags_str = self.cleaned_data.get('tags', '')
+        return [tag.strip() for tag in tags_str.split(',') if tag.strip()]
+
+    def save(self, commit=True, author=None):
+        post = super().save(commit=False)
+
+        if author is not None:
+            post.author = author
+
+        if commit:
+            post.save()
+
+        tags_list = self.cleaned_data.get('tags', [])
+        post.tags.clear()   #Очищаем все текущие теги у поста.
+
+        for tag_name in tags_list:
+            tag_slug = slugify(tag_name)
+            tag, _ = Tag.objects.get_or_create(
+                slug=tag_slug,
+                defaults={'name': tag_name}
+            )
+            post.tags.add(tag)
+
+        return post
+
+
+
 
 class PostForm(forms.ModelForm):
     title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -57,7 +85,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'body', 'tags']
+        fields = ['title', 'body']
 
     def save(self, commit=True):
         instance = super().save(commit=False)

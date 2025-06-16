@@ -9,10 +9,16 @@ from django.views.generic import TemplateView, DeleteView
 from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.core.paginator import Paginator
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 
 from .form import *
 from .models import *
 
+@login_required
+def change_password(PasswordChangeView):
+    template_name = 'blog/password_change.html'
+    success_url = reverse_lazy('profile')
 
 @login_required
 def edit_comment(request, pk):

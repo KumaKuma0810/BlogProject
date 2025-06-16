@@ -4,7 +4,23 @@
 <div class="container">
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="mb-3">
+            {{ form.username }}
+            {% if form.username.errors %}
+            <div class="alert alert-danger mt-2">
+                {{ form.username.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            {{ form.password }}
+            {% if form.password.errors %}
+            <div class="alert alert-danger mt-2">
+                {{ form.password.errors }}
+            </div>
+            {% endif %}
+        </div>
+
         <button type="submit" class="btn btn-primary">Войти</button>
     </form>
 

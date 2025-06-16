@@ -28,7 +28,7 @@ urlpatterns = [
     path('login/', custom_login, name='login'),
     path('logout/', custom_logout, name='logout'),
     path('signup/', signup_view, name='signup'),
-
+    path('profile/change_password/', PasswordChangeView.as_view(), name='change_password'),
     path('post_detail/<slug:slug>/', PostDetailView.as_view(), name='post_detail'),
     path('', PostListView.as_view(), name='post_list'),
 
@@ -37,3 +37,4 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
